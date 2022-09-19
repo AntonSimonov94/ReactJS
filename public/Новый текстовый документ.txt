@@ -1,0 +1,59 @@
+import './App.scss';
+import {useEffect, useRef, useState} from "react";
+
+export default function App() {
+  const[state, setState] = useState(
+[
+          {
+              name: '',
+              password: ''
+          }
+]
+  )
+    const[name,setName] = useState('');
+    const[password,setPassword] = useState('');
+    const useSubmit = (e) => {
+        e.preventDefault();
+        //useState({name: e.target.name.value, password: e.target.password.value})
+        //console.log(state);
+        state.push({name: e.target.name.value, password: e.target.password.value});
+        state.map((item) => console.log(item.name+': '+ item.password));
+    };
+useEffect(() => { alert('Сообщение отправлено от: '+ state[state.length-1].name)}, [state]);
+  const ref = useRef('null')
+  return (
+      <div>
+      <form onSubmit={useSubmit}>
+
+          <label>
+              Имя:
+              <input
+                  type="text"
+                  value={name}
+                  name="name"
+                  id={"name"}
+                  onChange={(event)=> setName(event.target.value)}
+              />
+          </label>
+
+          <label>
+              Пароль:
+              <input
+                  value={password}
+                  name="password"
+                  type="text"
+                  onChange={(event)=>setPassword(event.target.value)}
+              />
+          </label>
+
+          <button onClick={()=> setState([{name: name, password: password}])}>Отправить</button>
+      </form>
+        {state.map((item) => <h2>{item.name+': '+ item.password}</h2>)}
+      </div>
+
+
+  );
+}
+///setState(state.name = event.target.value)
+//{state.map((item) => <h2>{item.name+': '+ item.password}</h2>)}
+//setState({...state,name: event.target.value}
