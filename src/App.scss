@@ -37,9 +37,44 @@
   }
 }
 
-.first-header {
-  font-family: "Times New Roman";
-  font-weight: bold;
-  font-size: calc(20px + 4vmin);
-  color:red;
+.main {
+  display: flex;
+  justify-content: center;
+  .main-content {
+    display: flex;
+    width: 40%;
+    height: 40%;
+    justify-content: center;
+    flex-direction: column;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      width: 40%;
+      height: 40%;
+      border: 1px solid black;
+      margin-top: 20px;
+      padding: 10px;
+
+      input[name=author] {
+        margin:5px;
+        background-color: whitesmoke;
+      }
+      input[name=text] {
+        margin: 5px;
+        background-color: whitesmoke;
+      }
+      button {
+        text-align: center;
+        width:40%;
+        background-color: aquamarine;
+      }
+
+  }
+
+
+
+
+  }
 }
