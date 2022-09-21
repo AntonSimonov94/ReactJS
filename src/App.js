@@ -1,5 +1,8 @@
 import './App.scss';
 import {useEffect, useState} from "react";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 export default function App() {
     const [messageList, setMessageList] = useState(
@@ -29,34 +32,37 @@ export default function App() {
         }, [messageList]
     )
     return (
-        <div className={"main"}>
+        <div className={'main'}>
             <div className="main-content">
-                <form onSubmit={handleSubmit} className={"form"}>
+        <Box
+            className={'main-content-box'}
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+        >
+            <TextField id="outlined-basic"
+                       label="Автор"
+                       variant="outlined"
+                       value={author}
+                       name="author"
+                       ref={TextField => TextField && TextField.focus()}
+                       onChange={(event) => setAuthor(event.target.value)} />
+            <TextField id="outlined-basic"
+                       label="Сообщение"
+                       variant="outlined"
+                       value={text}
+                       name="text"
 
-                    <label>
-                        Автор:
-                        <input
-                            type="text"
-                            value={author}
-                            name="author"
-                            onChange={(event) => setAuthor(event.target.value)}
-                        />
-                    </label>
-                    <label>
-                        Текст:
-                        <input
-                            type="text"
-                            value={text}
-                            name="text"
-                            onChange={(event) => setText(event.target.value)}
-                        />
-                    </label>
-                    <label>
-                        <button>Отправить</button>
-                    </label>
-                </form>
-                {messageList.map((item) => <h2>{item.author + ': ' + item.text}</h2>)}
-            </div>
+                       onChange={(event) => setText(event.target.value)}/>
+            <Button type={"submit"} variant="contained">Отправить</Button>
+        </Box>
+            {messageList.map((item) => <h2>{item.author + ' : ' + item.text}</h2>)}
         </div>
+        </div>
+
     );
 }
