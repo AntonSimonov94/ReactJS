@@ -36,7 +36,18 @@
     transform: rotate(360deg);
   }
 }
+.header {
+  display: flex;
+  justify-content: center;
 
+    .header-link {
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #87CEEB;
+      width: 100px;
+      text-align: center;
+    }
+}
 .main {
   display: flex;
   flex-direction: row;
@@ -66,6 +77,7 @@
       width: 100%;
       margin: 10px;
       text-align: center;
+    background-color: #F5F5F5;
 
     }
   }
