@@ -73,12 +73,22 @@
     width: 30%;
 
     .main-list-chat {
+      display: flex;
+      align-items: center;
       border: 1px solid #87CEEB;
+      height: 50px;
       width: 100%;
       margin: 10px;
       text-align: center;
-    background-color: #F5F5F5;
+      background-color: #F5F5F5;
 
+        .main-list-chat-text {
+display: flex;
+          width: 90%;
+        }
+      .main-list-chat-text {
+        width: 100%;
+      }
     }
   }
 

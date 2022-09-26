@@ -14,7 +14,7 @@ const ChatsPage = () => {
     )
     const [author, setAuthor] = useState('');
     const [text, setText] = useState('');
-    const [chatArray] = useState(
+    const [chatArray, setChatArray] = useState(
         [
             {
                 id: 1,
@@ -71,6 +71,15 @@ const ChatsPage = () => {
             },
         }
     });
+ function delChat(id) {
+     setChatArray(chatArray.filter(item => item !== id));
+     changeId(id.id)
+ }
+function changeId(id) {
+     chatArray.map((item) => {
+         if (item.id > id) {item.id = item.id-1}
+    })
+}
 
     return (
         <ThemeProvider theme={theme}>
@@ -85,10 +94,12 @@ const ChatsPage = () => {
                             {chatArray.map((item) => {
                                 return (
                                     <div key={item.id} className={'main-list-chat'}>
-                                        <p>{item.id + ' : ' + item.name}</p>
+                                        <div className={'main-list-chat-text'}>{item.id + ' : ' + item.name}</div>
+                                        <button onClick={() => delChat(item)} className={'main-list-chat-button'}>x</button>
                                     </div>
                                 )
                             })}
+                            <button>Добавить</button>
                         </ListItem>
                     </List>
                 </div>
