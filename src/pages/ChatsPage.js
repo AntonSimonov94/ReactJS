@@ -18,15 +18,18 @@ const ChatsPage = () => {
         [
             {
                 id: 1,
-                name: 'chat 1'
+                author: 'Artem',
+                text: 'chat 1'
             },
             {
                 id: 2,
-                name: 'chat 2'
+                author: 'Andrey',
+                text: 'chat 2'
             },
             {
                 id: 3,
-                name: 'chat 3'
+                author: 'Ivan',
+                text: 'chat 3'
             }
         ]
     )
@@ -36,6 +39,7 @@ const ChatsPage = () => {
         //console.log(event);
         if ((author !== '') && (text !== '')) {
             setMessageList(prevState => [...prevState, {id: prevState.length, author: author, text: text}])
+            setChatArray(prevState => [...prevState, {id: chatArray.length+1, author: author, text: text}])
             setAuthor('');
             setText('');
         }
@@ -94,12 +98,11 @@ function changeId(id) {
                             {chatArray.map((item) => {
                                 return (
                                     <div key={item.id} className={'main-list-chat'}>
-                                        <div className={'main-list-chat-text'}>{item.id + ' : ' + item.name}</div>
+                                        <div className={'main-list-chat-text'}>{item.author + ' : ' + item.text}</div>
                                         <button onClick={() => delChat(item)} className={'main-list-chat-button'}>x</button>
                                     </div>
                                 )
                             })}
-                            <button>Добавить</button>
                         </ListItem>
                     </List>
                 </div>
@@ -140,7 +143,7 @@ function changeId(id) {
                                    onChange={(event) => setText(event.target.value)}/>
                         <div>
                             <Button type={"submit"} variant="contained" sx={{'width': '100%'}}>
-                                Отправить
+                                Добавить чат
                             </Button>
                         </div>
                     </Box>
