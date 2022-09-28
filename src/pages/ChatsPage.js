@@ -7,6 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import {Link} from "react-router-dom";
 
 const ChatsPage = () => {
     const [messageList, setMessageList] = useState(
@@ -39,7 +40,7 @@ const ChatsPage = () => {
         //console.log(event);
         if ((author !== '') && (text !== '')) {
             setMessageList(prevState => [...prevState, {id: prevState.length, author: author, text: text}])
-            setChatArray(prevState => [...prevState, {id: chatArray.length+1, author: author, text: text}])
+            setChatArray(prevState => [...prevState, {id: chatArray.length + 1, author: author, text: text}])
             setAuthor('');
             setText('');
         }
@@ -75,15 +76,19 @@ const ChatsPage = () => {
             },
         }
     });
- function delChat(id) {
-     setChatArray(chatArray.filter(item => item !== id));
-     changeId(id.id)
- }
-function changeId(id) {
-     chatArray.map((item) => {
-         if (item.id > id) {item.id = item.id-1}
-    })
-}
+
+    function delChat(id) {
+        setChatArray(chatArray.filter(item => item !== id));
+        changeId(id.id)
+    }
+
+    function changeId(id) {
+        chatArray.map((item) => {
+            if (item.id > id) {
+                item.id = item.id - 1
+            }
+        })
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -98,8 +103,9 @@ function changeId(id) {
                             {chatArray.map((item) => {
                                 return (
                                     <div key={item.id} className={'main-list-chat'}>
-                                        <div className={'main-list-chat-text'}>{item.author + ' : ' + item.text}</div>
-                                        <button onClick={() => delChat(item)} className={'main-list-chat-button'}>x</button>
+                                        <Link to={`/messages/${item.id}`} className={'main-list-chat-text'}>{item.author + ' : ' + item.text}</Link>
+                                        <button onClick={() => delChat(item)} className={'main-list-chat-button'}>x
+                                        </button>
                                     </div>
                                 )
                             })}
