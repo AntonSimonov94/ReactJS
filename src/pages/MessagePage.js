@@ -24,7 +24,7 @@ const MessagePage = () => {
     )
     const { id } = useParams();
 
-    const getMessage = (id) => {
+    function getMessage(id) {
         return messageArray.filter(item => item.chatId == id);
     }
     return (
