@@ -1,73 +1,19 @@
-import '../App.scss';
-import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import React, {useState} from 'react';
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {blue} from "@mui/material/colors";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import {Link} from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {Link} from "react-router-dom";
+import {blue} from "@mui/material/colors";
 
 const ChatsPage = () => {
-    const [messageList, setMessageList] = useState(
-        []
-    )
     const [author, setAuthor] = useState('');
     const [text, setText] = useState('');
-    const [chatArray, setChatArray] = useState(
-        [
-            {
-                id: 1,
-                author: 'Artem',
-                text: 'chat 1'
-            },
-            {
-                id: 2,
-                author: 'Andrey',
-                text: 'chat 2'
-            },
-            {
-                id: 3,
-                author: 'Ivan',
-                text: 'chat 3'
-            }
-        ]
-    )
-
-    function handleSubmit(event) {
-        event.preventDefault();
-        //console.log(event);
-        if ((author !== '') && (text !== '')) {
-            setMessageList(prevState => [...prevState, {id: prevState.length, author: author, text: text}])
-            setChatArray(prevState => [...prevState, {id: chatArray.length + 1, author: author, text: text}])
-            setAuthor('');
-            setText('');
-        }
-    }
-
-    function botText(authorEnd) {
-        if (authorEnd !== 'BOT') {
-            setMessageList(prevState => [...prevState, {
-                id: prevState.length,
-                author: "BOT",
-                text: "Cообщение отправлено от " + authorEnd
-            }])
-        }
-    }
-
-    const focusOn = useRef('null');
-
-    useEffect(() => {
-            setTimeout(() => {
-                const messageLen = messageList[messageList.length - 1];
-                if (messageLen) {
-                    botText(messageLen.author)
-                }
-            }, 2000)
-            focusOn.current.focus()
-        }, [messageList]
-    )
+    const chats = useSelector(state => state.chats.chat);
+    const dispatch = useDispatch();
 
     const theme = createTheme({
         palette: {
@@ -77,17 +23,31 @@ const ChatsPage = () => {
         }
     });
 
-    function delChat(id) {
-        setChatArray(chatArray.filter(item => item !== id));
-        changeId(id.id)
+    const handleDelete = (id) => {
+        dispatch({type: 'delete', payload: id})
+        changeId(id)
     }
 
     function changeId(id) {
-        chatArray.map((item) => {
+        chats.map((item) => {
             if (item.id > id) {
                 item.id = item.id - 1
             }
         })
+    }
+
+    const handleAdd = (event) => {
+        event.preventDefault();
+        if ((author !== '') && (text !== '')) {
+            const newChat = {
+                id: chats.length + 1,
+                author: author,
+                text: text
+            }
+            dispatch({type: 'add', payload: newChat})
+            setAuthor('');
+            setText('');
+        }
     }
 
     return (
@@ -100,11 +60,13 @@ const ChatsPage = () => {
                             'flex-direction': 'column',
                             'margin-right': '200px'
                         }}>
-                            {chatArray.map((item) => {
+                            {chats.map((item) => {
                                 return (
                                     <div key={item.id} className={'main-list-chat'}>
-                                        <Link to={`/messages/${item.id}`} className={'main-list-chat-text'}>{item.author + ' : ' + item.text}</Link>
-                                        <button onClick={() => delChat(item)} className={'main-list-chat-button'}>x
+                                        <Link to={`/messages/${item.id}`}
+                                              className={'main-list-chat-text'}>{item.id + item.author + ' : ' + item.text}</Link>
+                                        <button onClick={() => handleDelete(item.id)}
+                                                className={'main-list-chat-button'}>x
                                         </button>
                                     </div>
                                 )
@@ -131,43 +93,34 @@ const ChatsPage = () => {
                         }}
                         noValidate
                         autoComplete="off"
-                        onSubmit={handleSubmit}
+                        onSubmit={handleAdd}
                     >
                         <TextField id="outlined-basic"
                                    label="Автор"
                                    variant="outlined"
-                                   value={author}
                                    name="author"
-                                   inputRef={focusOn}
-                                   onChange={(event) => setAuthor(event.target.value)}/>
+                                   value={author}
+                                   autoFocus
+                                   onChange={(event) => setAuthor(event.target.value)}
+                        />
                         <TextField id="outlined-basic"
                                    label="Сообщение"
                                    variant="outlined"
-                                   value={text}
                                    name="text"
-
-                                   onChange={(event) => setText(event.target.value)}/>
+                                   value={text}
+                                   onChange={(event) => setText(event.target.value)}
+                        />
                         <div>
                             <Button type={"submit"} variant="contained" sx={{'width': '100%'}}>
                                 Добавить чат
                             </Button>
                         </div>
                     </Box>
-                    <div className={'main-massage'}>
-                        {messageList.map((item) => {
-                            return (
-                                <div key={item.id}>
-                                    <h2>{item.author + ' : ' + item.text}</h2>
-                                </div>
-                            )
-                        })}
-                    </div>
                 </div>
-
             </div>
         </ThemeProvider>
-    );
-}
-
+    )
+};
 
 export default ChatsPage;
+

@@ -1,4 +1,3 @@
-
 const initialState = {
     messages: [
         {
@@ -20,6 +19,7 @@ const initialState = {
 }
 export const messageReducer = (state = initialState, action) => {
     switch (action.type) {
+
         default:
             return state
     }

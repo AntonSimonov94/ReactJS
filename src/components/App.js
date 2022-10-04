@@ -3,7 +3,6 @@ import React from 'react';
 import {BrowserRouter, Link, Route, Router, Routes} from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import ChatsPage from "../pages/ChatsPage";
-import ChatPage from "../pages/ChatPage";
 import ProfilePage from "../pages/ProfilePage";
 import Layout from "./Layout";
 import NotFound from "../pages/NotFound";
@@ -16,7 +15,6 @@ const App = () => {
                     <Route path={'/'} element={<Layout/>}>
                         <Route index element={<HomePage />} />
                         <Route path={'/chats'} element={<ChatsPage />} />
-                        <Route path={'/chat'} element={<ChatPage />} />
                         <Route path={'/profile'} element={<ProfilePage />} />
                         <Route path={'/messages/:id'}  element={<MessagePage />} />
                         <Route path={'*'} element={<NotFound/>}/>
