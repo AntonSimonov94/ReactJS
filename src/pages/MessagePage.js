@@ -1,31 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 const MessagePage = () => {
 
-    const [messageArray] = useState(
-        [
-            {
-                id: 1,
-                chatId: 1,
-                text: 'chat 1'
-            },
-            {
-                id: 2,
-                chatId: 2,
-                text: 'chat 2'
-            },
-            {
-                id: 3,
-                chatId: 2,
-                text: 'chat 3'
-            }
-        ]
-    )
+    const messages = useSelector( state => state.messages.messages);
+    const dispatch = useDispatch();
     const { id } = useParams();
-
     function getMessage(id) {
-        return messageArray.filter(item => item.chatId == id);
+        return messages.filter(item => item.chatId === parseInt(id));
     }
     return (
         <div>
