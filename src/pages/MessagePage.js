@@ -27,9 +27,9 @@ const MessagePage = () => {
         }
         dispatch({type: 'addMessage', payload: obj})
     }
-    const onAddMessage = useCallback((messages) => {
+    const onAddMessage = useCallback(() => {
         dispatch(addBotsMessage(id));
-    });
+    },[dispatch]);
 
     const handleDelete = (id) => {
         dispatch({
