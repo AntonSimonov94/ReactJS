@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useCallback} from "react";
 
 
 const MessagePage = () => {
@@ -27,9 +26,9 @@ const MessagePage = () => {
         }
         dispatch({type: 'addMessage', payload: obj})
     }
-    const onAddMessage = useCallback(() => {
+    const onAddMessage = () => {
         dispatch(addBotsMessage(id));
-    },[]);
+    };
 
     const handleDelete = (id) => {
         dispatch({
