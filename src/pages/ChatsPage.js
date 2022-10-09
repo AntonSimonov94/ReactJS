@@ -15,6 +15,7 @@ const ChatsPage = () => {
     const chats = useSelector(state => state.chats.chat);
     const dispatch = useDispatch();
 
+
     const theme = createTheme({
         palette: {
             primary: {
@@ -24,7 +25,7 @@ const ChatsPage = () => {
     });
 
     const handleDelete = (id) => {
-        dispatch({type: 'delete', payload: id})
+        dispatch({type: 'deleteChat', payload: id})
         changeId(id)
     }
 
@@ -42,9 +43,9 @@ const ChatsPage = () => {
             const newChat = {
                 id: chats.length + 1,
                 author: author,
-                text: text
+                text: text,
             }
-            dispatch({type: 'add', payload: newChat})
+            dispatch({type: 'addChat', payload: newChat})
             setAuthor('');
             setText('');
         }
@@ -64,7 +65,7 @@ const ChatsPage = () => {
                                 return (
                                     <div key={item.id} className={'main-list-chat'}>
                                         <Link to={`/messages/${item.id}`}
-                                              className={'main-list-chat-text'}>{item.id + item.author + ' : ' + item.text}</Link>
+                                              className={'main-list-chat-text'}>{item.author}</Link>
                                         <button onClick={() => handleDelete(item.id)}
                                                 className={'main-list-chat-button'}>x
                                         </button>
