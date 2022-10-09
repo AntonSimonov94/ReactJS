@@ -18,7 +18,7 @@ const MessagePage = () => {
         dispatch({type: 'addMessage', payload: obj});
         onAddMessage();
     }
-    const addBotsMessage = (id) => (dispatch, getState) => {
+    const addBotsMessage = (id) => (dispatch) => {
         const obj = {
             id: messages.length + 2,
             chatId: parseInt(id),
@@ -27,7 +27,9 @@ const MessagePage = () => {
         dispatch({type: 'addMessage', payload: obj})
     }
     const onAddMessage = () => {
-        dispatch(addBotsMessage(id));
+        setTimeout(() => {
+            dispatch(addBotsMessage(id))
+        }, 3000);
     };
 
     const handleDelete = (id) => {
