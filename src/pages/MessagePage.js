@@ -29,7 +29,7 @@ const MessagePage = () => {
     }
     const onAddMessage = useCallback(() => {
         dispatch(addBotsMessage(id));
-    },[dispatch]);
+    },[]);
 
     const handleDelete = (id) => {
         dispatch({
