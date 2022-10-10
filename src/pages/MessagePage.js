@@ -27,9 +27,7 @@ const MessagePage = () => {
         dispatch({type: 'addMessage', payload: obj})
     }
     const onAddMessage = () => {
-        setTimeout(() => {
             dispatch(addBotsMessage(id))
-        }, 3000);
     };
 
     const handleDelete = (id) => {

@@ -7,7 +7,9 @@ import {persistReducer, persistStore} from "redux-persist";
 
 const thunk = (store) => (next) => (action) => {
     if (typeof action === 'function') {
-        return action(store.dispatch, store.getState);
+        setTimeout(() => {
+        return action(store.dispatch);
+        }, 3000);
     }
     return next(action);
 };
