@@ -3,8 +3,14 @@ import {chatsReducer} from './reducers/chatsReducer';
 import {messageReducer} from "./reducers/messageReducer";
 import storage from 'redux-persist/lib/storage'
 import {persistReducer, persistStore} from "redux-persist";
-import thunk from "redux-thunk";
 
+
+const thunk = (store) => (next) => (action) => {
+    if (typeof action === 'function') {
+        return action(store.dispatch, store.getState);
+    }
+    return next(action);
+};
 
 
 const reducer = combineReducers({
