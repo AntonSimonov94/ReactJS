@@ -1,23 +1,17 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {chatsReducer} from './reducers/chatsReducer';
+import {newsReducer} from './reducers/newsReducer';
 import {messageReducer} from "./reducers/messageReducer";
 import storage from 'redux-persist/lib/storage'
 import {persistReducer, persistStore} from "redux-persist";
+import thunk from "redux-thunk";
 
-
-const thunk = (store) => (next) => (action) => {
-    if (typeof action === 'function') {
-        setTimeout(() => {
-        return action(store.dispatch);
-        }, 3000);
-    }
-    return next(action);
-};
 
 
 const reducer = combineReducers({
     chats: chatsReducer,
-    messages: messageReducer
+    messages: messageReducer,
+    news: newsReducer
 })
 
 

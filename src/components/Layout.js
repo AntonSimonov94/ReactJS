@@ -12,6 +12,7 @@ const Layout = () => {
                     <CustomLink to={"/"}>Главная</CustomLink>
                     <CustomLink className={'header-link'} to={"/chats"}>Чаты</CustomLink>
                     <CustomLink className={'header-link'} to={"/profile"}>Профиль</CustomLink>
+                    <CustomLink className={'header-link'} to={"/news"}>Новости</CustomLink>
                 </header>
             </div>
             <main>

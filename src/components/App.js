@@ -7,6 +7,7 @@ import ProfilePage from "../pages/ProfilePage";
 import Layout from "./Layout";
 import NotFound from "../pages/NotFound";
 import MessagePage from "../pages/MessagePage";
+import NewsPage from "../pages/NewsPage";
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
                         <Route path={'/chats'} element={<ChatsPage />} />
                         <Route path={'/profile'} element={<ProfilePage />} />
                         <Route path={'/messages/:id'}  element={<MessagePage />} />
+                        <Route path={'/news'} element={<NewsPage />} />
                         <Route path={'*'} element={<NotFound/>}/>
                     </Route>
                 </Routes>
