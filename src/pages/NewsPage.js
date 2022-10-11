@@ -1,39 +1,42 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getData} from "../redux/reducers/newsReducer";
-import {getErorsSelector, getLoadingSelector, getNewsSelector} from "../redux/selectors";
+import {getErrorsSelector, getLoadingSelector, getNewsSelector} from "../redux/selectors";
 
 const NewsPage = () => {
     const news = useSelector(getNewsSelector);
     const loading = useSelector(getLoadingSelector);
-    const error = useSelector(getErorsSelector);
+    const error = useSelector(getErrorsSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
-       dispatch(getData())
-        }, [])
+        dispatch(getData())
+    }, [])
 
-    if(loading) {
+    const repeatData = () => {
+        dispatch(getData())
+    }
+
+    if (loading) {
         return (
             <div>
                 Идет загрузка....
             </div>
         )
     }
-
-    if(error) {
+    if (error) {
         return (
             <div>
                 <p>Произошла ошибка, обновите страницу</p>
-                <button onClick={getData}>Обновить</button>
+                <button onClick={repeatData}>Обновить</button>
             </div>
         )
     }
 
     return (
         <div>
-            {news.map((item) =>{
-                return(
+            {news.map((item) => {
+                return (
                     <div key={item.id}>
                         {item.title}
                     </div>

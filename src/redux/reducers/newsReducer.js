@@ -1,9 +1,10 @@
-import {GET_POSTS, GET_POSTS_ERROR, GET_POSTS_LOADING} from "../actionTypes";
+import {GET_POSTS, GET_POSTS_ERROR, GET_POSTS_LOADING, errorsNews, loadingNews} from "../actionTypes";
 
 
 const initialState = {
     news: [],
-    loading: false
+    loading: false,
+    error: null
 }
 
 export const newsReducer = (state = initialState, action) => {
@@ -33,18 +34,16 @@ export const newsReducer = (state = initialState, action) => {
 
 export const getData = () => {
     return async (dispatch) => {
-        dispatch({type: GET_POSTS_LOADING})
+        dispatch(loadingNews())
         try {
             const response = await fetch('https://jsonplaceholder.typicode.com/todos')
             const data = await response.json()
-            dispatch({type: GET_POSTS, payload: data})
+            dispatch({
+                type: GET_POSTS,
+                payload: data
+            })
+        } catch (error) {
+            dispatch(errorsNews(error.toString()))
         }
-        catch (error) {
-           dispatch({
-               type: GET_POSTS_ERROR,
-               payload: error
-           })
-        }
-
-
-    }}
+    }
+}
