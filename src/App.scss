@@ -48,7 +48,13 @@
       text-align: center;
     }
 }
-
+.registry-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .main {
   display: flex;
   flex-direction: row;

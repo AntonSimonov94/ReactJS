@@ -5,13 +5,15 @@ import {messageReducer} from "./reducers/messageReducer";
 import storage from 'redux-persist/lib/storage'
 import {persistReducer, persistStore} from "redux-persist";
 import thunk from "redux-thunk";
+import {registryReducer} from "./reducers/registryReducer";
 
 
 
 const reducer = combineReducers({
     chats: chatsReducer,
     messages: messageReducer,
-    news: newsReducer
+    news: newsReducer,
+    login: registryReducer
 })
 
 
