@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import {registryInitiate} from "../redux/reducers/registryReducer";
 
 const RegistryPage = () => {
     const [email, setEmail] = useState(``);
@@ -14,7 +15,11 @@ const RegistryPage = () => {
 
 
 const handleAdd = (e) => {
+    e.preventDefault();
 
+    if (password !== passwordConfirm) {
+       return;}
+        dispatch(registryInitiate(displayName, email, password))
     }
 
 
@@ -28,7 +33,7 @@ const handleAdd = (e) => {
                     '& > :not(style)': {m: 1, width: '25ch'},
                     'width': '30%',
                     'height': '200px',
-                    marginTop: '10px',
+                    marginTop: '80px',
                     'display': 'flex',
                     justifyContent: 'center',
                     flexDirection: 'column',
@@ -39,6 +44,14 @@ const handleAdd = (e) => {
                 autoComplete="off"
                 onSubmit={handleAdd}
             >
+                <TextField id="outlined-basic"
+                           label="Имя"
+                           variant="outlined"
+                           name="author"
+                           value={displayName}
+                           autoFocus
+                           onChange={(event) => setDisplayName(event.target.value)}
+                />
                 <TextField id="outlined-basic"
                            label="Email"
                            variant="outlined"
