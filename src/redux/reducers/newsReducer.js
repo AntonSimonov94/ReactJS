@@ -1,5 +1,5 @@
-import {GET_POSTS, GET_POSTS_ERROR, GET_POSTS_LOADING, errorsNews, loadingNews} from "../actionTypes";
-
+import {errorsNews, loadingNews} from "../actionTypes";
+import {GET_POSTS, GET_POSTS_ERROR, GET_POSTS_LOADING} from "../actions";
 
 const initialState = {
     news: [],
