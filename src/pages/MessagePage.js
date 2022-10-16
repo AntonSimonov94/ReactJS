@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {db} from "../service/firebase"
 
 
 const MessagePage = () => {
     const [text, setText] = useState('');
+    const [data, setData] = useState({});
     const messages = useSelector(state => state.messages.messages);
     const dispatch = useDispatch();
     const {id} = useParams();
@@ -15,20 +17,22 @@ const MessagePage = () => {
             chatId: parseInt(id),
             text: text
         }
-        dispatch({type: 'addMessage', payload: obj});
-        onAddMessage();
+        db.child('message').push(obj, (e) => {
+            if (e) {console.log(e)}
+        });
     }
-    const addBotsMessage = (id) => (dispatch) => {
-        const obj = {
-            id: messages.length + 2,
-            chatId: parseInt(id),
-            text: 'BOT: сообщение доставлено'
-        }
-        dispatch({type: 'addMessage', payload: obj})
-    }
-    const onAddMessage = () => {
-            dispatch(addBotsMessage(id))
-    };
+    useEffect(() => {
+        db.child('message').on("value", (snapshot) =>{
+            if (snapshot.val() !== null) {
+                setData(...snapshot.val())
+            } else {
+                setData({})
+            }
+        })
+return () => {
+            setData({})
+}
+    },[])
 
     const handleDelete = (id) => {
         dispatch({
@@ -40,13 +44,11 @@ const MessagePage = () => {
     return (
         <div>
 
-            {messages.filter(item => item.chatId === parseInt(id)).map((item) => {
+            {Object.keys(data).map((id) => {
                 return (
-                    <div key={item.id} className={'messages-text'}>
-                        <h2>{item.text}</h2>
-                        <button className={'messages-text-button'} onClick={() => handleDelete(item.id)}>X</button>
+                    <div key={data[id].id} className={'messages-text'}>
+                        <h2>{data[id].text}</h2>
                     </div>
-
                 )
             })}
             <input value={text} onChange={(e) => setText(e.target.value)}/>
