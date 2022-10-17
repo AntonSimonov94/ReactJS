@@ -1,19 +1,22 @@
 import {useDispatch, useSelector} from "react-redux";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {blue} from "@mui/material/colors";
+import {db} from "../service/firebase";
 
 const ChatsPage = () => {
+    const [data, setData] = useState({});
     const [author, setAuthor] = useState('');
-    const [text, setText] = useState('');
+    const [email, setEmail] = useState('');
     const chats = useSelector(state => state.chats.chat);
     const dispatch = useDispatch();
+    let count = 0;
 
 
     const theme = createTheme({
@@ -37,19 +40,30 @@ const ChatsPage = () => {
         })
     }
 
-    const handleAdd = (event) => {
-        event.preventDefault();
-        if ((author !== '') && (text !== '')) {
-            const newChat = {
-                id: chats.length + 1,
-                author: author,
-                text: text,
-            }
-            dispatch({type: 'addChat', payload: newChat})
-            setAuthor('');
-            setText('');
+    const handleAdd = () => {
+        const obj = {
+            id: count,
+            author: author,
+            email: email
         }
+        db.child('chats').push(obj, (e) => {
+            if (e) {console.log(e)}
+        });
+        setAuthor('');
+        setEmail('');
     }
+    useEffect(() => {
+        db.child('chats').on("value", (snapshot) =>{
+            if (snapshot.val() !== null) {
+                setData(snapshot.val())
+            } else {
+                setData({})
+            }
+        })
+        return () => {
+            setData({})
+        }
+    },[])
 
     return (
         <ThemeProvider theme={theme}>
@@ -61,12 +75,12 @@ const ChatsPage = () => {
                             'flex-direction': 'column',
                             'margin-right': '200px'
                         }}>
-                            {chats.map((item) => {
+                            {Object.keys(data).map((mid) => {
                                 return (
-                                    <div key={item.id} className={'main-list-chat'}>
-                                        <Link to={`/messages/${item.id}`}
-                                              className={'main-list-chat-text'}>{item.author}</Link>
-                                        <button onClick={() => handleDelete(item.id)}
+                                    <div key={data[mid].id} className={'main-list-chat'}>
+                                        <Link to={`/messages/${data[mid].id}`}
+                                              className={'main-list-chat-text'}>{data[mid].author}</Link>
+                                        <button onClick={() => handleDelete(data[mid].id)}
                                                 className={'main-list-chat-button'}>x
                                         </button>
                                     </div>
@@ -105,11 +119,11 @@ const ChatsPage = () => {
                                    onChange={(event) => setAuthor(event.target.value)}
                         />
                         <TextField id="outlined-basic"
-                                   label="Сообщение"
+                                   label="Email"
                                    variant="outlined"
                                    name="text"
-                                   value={text}
-                                   onChange={(event) => setText(event.target.value)}
+                                   value={email}
+                                   onChange={(event) => setEmail(event.target.value)}
                         />
                         <div>
                             <Button type={"submit"} variant="contained" sx={{'width': '100%'}}>

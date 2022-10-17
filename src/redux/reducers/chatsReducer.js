@@ -3,17 +3,17 @@ const initialState = {
         {
             id: 1,
             author: 'Artem',
-            text: 'chat 1'
+            email: 'chat 1'
         },
         {
             id: 2,
             author: 'Andrey',
-            text: 'chat 2'
+            email: 'chat 2'
         },
         {
             id: 3,
             author: 'Ivan',
-            text: 'chat 3'
+            email: 'chat 3'
         }
     ]
 }

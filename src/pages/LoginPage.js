@@ -18,6 +18,7 @@ const LoginPage = () => {
             return;
         }
         dispatch(loginInitiate(email, password))
+        navigate('/')
     }
 
     return (

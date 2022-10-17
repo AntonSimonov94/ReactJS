@@ -47,7 +47,6 @@ return () => {
         <div>
 
             {Object.keys(data).map((mid) => {
-                console.log(data[mid].chatId);
                 if (parseInt(data[mid].chatId) === parseInt(id)) {
                     return (
                         <div key={data[mid].id} className={'messages-text'}>
