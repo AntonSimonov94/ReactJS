@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 const HomePage = () => {
 const dispatch = useDispatch();
 const navigate = useNavigate();
-const user = useSelector(state => state.login.user)
+const user = useSelector(state => state.login.currentUser)
 
 
     const handleLogout = () => {
@@ -20,7 +20,10 @@ const user = useSelector(state => state.login.user)
     return (
         <div>
             Главная
-            <button onClick={() => handleLogout()}>Выйти</button>
+            {user ? (
+                <button onClick={() => handleLogout()}>Выйти</button>
+            ): ''}
+
         </div>
     );
 };

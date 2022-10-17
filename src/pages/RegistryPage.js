@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import {registryInitiate} from "../redux/reducers/registryReducer";
+import {useNavigate} from "react-router-dom";
 
 const RegistryPage = () => {
     const [email, setEmail] = useState(``);
@@ -12,14 +13,15 @@ const RegistryPage = () => {
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [displayName, setDisplayName] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
 const handleAdd = (e) => {
     e.preventDefault();
-
     if (password !== passwordConfirm) {
        return;}
         dispatch(registryInitiate(displayName, email, password))
+        navigate('/login')
     }
 
 

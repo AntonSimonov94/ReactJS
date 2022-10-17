@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginInitiate} from "../redux/reducers/registryReducer";
 import {useNavigate} from "react-router-dom";
 
@@ -18,9 +18,7 @@ const LoginPage = () => {
             return;
         }
         dispatch(loginInitiate(email, password))
-        navigate('/');
     }
-
 
     return (
         <div className={'registry-main'}>

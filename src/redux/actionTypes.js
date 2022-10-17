@@ -38,15 +38,15 @@ export const loginError = (error) => ({
 })
 
 export const logoutLoading = () => ({
-    type: types.LOGIN_LOADING
+    type: types.LOGOUT_LOADING
 })
 
-export const logoutSuccess = (user) => ({
-    type: types.LOGIN_SUCCESS,
-    payload: user
+export const logoutSuccess = () => ({
+    type: types.LOGOUT_SUCCESS,
+    payload: null
 })
 
 export const logoutError = (error) => ({
-    type: types.LOGIN_ERROR,
+    type: types.LOGOUT_ERROR,
     payload: error.toString()
 })

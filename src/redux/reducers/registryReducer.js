@@ -24,11 +24,22 @@ export const registryReducer = (state = initialState, action) => {
                 ...state,
                 loading: true
             }
-        case types.REGISTRY_SUCCESS:
+        case types.LOGIN_LOADING:
             return {
                 ...state,
-                carrentUser: action.payload
+                loading: true
             }
+        case types.LOGIN_SUCCESS:
+            return {
+                ...state,
+                currentUser: action.payload
+            }
+        case types.LOGOUT_SUCCESS:
+            return {
+                ...state,
+                currentUser: action.payload
+            }
+
         case types.REGISTRY_ERROR:
             return {
                 ...state,
@@ -53,7 +64,7 @@ export const registryInitiate = (displayName, email, password) => {
     }
 }
 
-export const loginInitiate = ( email, password) => {
+export const loginInitiate = (email, password) => {
     return (dispatch) => {
         dispatch(loginLoading())
         auth
